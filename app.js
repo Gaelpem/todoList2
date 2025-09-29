@@ -1,12 +1,16 @@
+
+
+
 let valeurInput = document.getElementById('valeurInput')
 let affichage = document.getElementById('affichage')
 let btnAjouter = document.getElementById('ajouter')
 
-function creeTache(tache){
+function creeTache(tache, done = false){
    return{
        tache, 
+       done, 
        afficheInfo : function(){
-           return `Tache : ${tache}`
+           return `Tache : ${tache} -  ${this.done ? "fait " : "a faire "}`
        }
    }
 }
@@ -31,18 +35,35 @@ const gestionnaire = {
         
         const li = document.createElement('li')
         li.textContent =  tache.afficheInfo()
-        const btnSup = document.createElement('button')
+
+        // checkbox
+        const checkbox = document.createElement('input')
+       checkbox.type = "checkbox"
+
+       checkbox.checked = tache.done
+
+       checkbox.addEventListener('change', ()=>{
+        tache.done = checkbox.checked
+        this.save()
+        this.afficheTache()
+       })
+
+       
+       const btnSup = document.createElement('button')
         btnSup.textContent = "Supprimer"
         btnSup.addEventListener('click', ()=>{
             this.removeTache(tache)
         })
-        
+
+
+      li.append(checkbox)
       li.append(btnSup)
       affichage.append(li)
       })
    }
 }
 
+// on recupere les valeur qui sont stocker dans localStorage 
 const saved = JSON.parse(localStorage.getItem("taches")) || []
 gestionnaire.taches  = saved.map((t)=> creeTache(t.tache))
 gestionnaire.afficheTache()
@@ -56,8 +77,6 @@ btnAjouter.addEventListener('click', ()=>{
             valeurInput.value = ''
         }
 })
-
-
 
 // Bonus: valider avec "Enter"
 valeurInput.addEventListener('keydown', (e)=>{
