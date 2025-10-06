@@ -1,3 +1,38 @@
-.mySlides { display: none; }
-.mySlides img { display: block; }
-.prev, .next { cursor: pointer; user-select: none; }
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+h1 {
+    color: white;
+    font-size: 4rem;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+span {
+    opacity: 0;
+    transition: all 0.8s ease;
+    transform: translateY(20px);
+    display: inline-block;
+
+}
+
+span.fade {
+    opacity: 1;
+    transform: translateY(0px);
+}
