@@ -42,7 +42,9 @@ const gestionnaireTache = {
     }, 
      afficheTache(){
         affichage.innerHTML = ''
-        this.taches.forEach((tache)=>{
+        const afficherFiltre = this.getTacheFiltre()
+
+        afficherFiltre.forEach((tache)=>{
          const li = document.createElement('li')
          li.textContent = tache.afficheDetail()
 
